@@ -15,9 +15,18 @@ class UserConstructor {
     }
   }
 
-router.get('/', (err, res) => {
+router.get('/', ensureAuthenticate, (err, res) => {
         res.render("index");
 })
+
+function ensureAuthenticate(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next()
+    } else {
+        req.flash('error', 'You are not ligged in')
+        res.redirect('/login')
+    }
+}
 router.get('/register', (req, res) => {
     res.render('register')
 })
@@ -101,13 +110,9 @@ passport.deserializeUser(function(id, done) {
     db.User.findById(id).then((user) =>{
         console.log('user find by id ', user)
         if (user) {
- 
             done(null, user.get());
- 
         } else {
- 
             done(user.errors, null);
- 
         }
     });
 });
@@ -119,5 +124,13 @@ router.post('/login',
     console.log('passport auth')
     res.redirect('/');
   });
+
+router.get('/logout', (req, res) => {
+    req.logout()
+
+    req.flash('success_msg', 'You are logged out')
+    res.redirect('/login')
+   
+})
 
 module.exports = router
