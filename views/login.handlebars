@@ -2,10 +2,10 @@
     <div class="row">
         <div class="col-md-4"> </div>
         <div class="col-md-4"> 
-            <form class="form-signin">
+            <form method="post" action="/login" class="form-signin">
                 <h2 class="form-signin-heading">Please sign in</h2>
                 <label for="login_username" class="sr-only">Username</label>
-                <input type="email" name="username" id="login_username" class="form-control" placeholder="Username" required autofocus>
+                <input type="text" name="username" id="login_username" class="form-control" placeholder="Username" required autofocus>
                 <label for="login_password" class="sr-only">Password</label>
                 <input type="password" name="password" id="login_password" class="form-control" placeholder="Password" required>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

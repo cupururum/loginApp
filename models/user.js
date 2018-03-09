@@ -2,8 +2,7 @@
 
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
+
 
 module.exports = (sequelize, DataTypes) => {
 
@@ -14,13 +13,16 @@ module.exports = (sequelize, DataTypes) => {
 
   // Method 3 via the direct method
   User.beforeCreate((newUser, callback) => {
-    return bcrypt.hash(myPlaintextPassword, saltRounds)
+    console.log("password newUser", newUser.password)
+    return bcrypt.hash(newUser.password, saltRounds)
     .then((hash) => {
       newUser.password = hash
     }).catch(err => {
       if (err) console.log(err);
     });
   })
+
+
 
   return User
 }
